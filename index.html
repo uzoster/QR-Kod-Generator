@@ -20,55 +20,199 @@
             align-items: center;
             padding: 20px;
         }
-
         .loader-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: radial-gradient(circle at center, #1a0b5e, #000);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 9999;
             transition: opacity 0.5s ease;
+            overflow: hidden;
         }
 
-        .loader {
-            width: 60px;
-            height: 60px;
+        .astro-loader {
             position: relative;
+            width: 250px;
+            height: 250px;
             transform-style: preserve-3d;
-            animation: rotate 2s infinite linear;
+            animation: galaxy-spin 10s infinite linear;
         }
 
-        .cube {
+        .nebula {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(144, 186, 252, 0.2), transparent);
+            filter: blur(20px);
+            animation: nebula-drift 15s infinite linear;
+        }
+
+        .nebula:nth-child(2) {
+            background: radial-gradient(circle, rgba(66, 3, 169, 0.3), transparent);
+            animation-direction: reverse;
+            transform: scale(0.8);
+        }
+
+        .orbital {
             position: absolute;
             width: 100%;
             height: 100%;
-            transform-style: preserve-3d;
+            border-radius: 50%;
+            border: 1px dashed rgba(144, 186, 252, 0.4);
+            animation: orbit 6s infinite linear;
         }
 
-        .cube div {
+        .orbital:nth-child(2) {
+            width: 180px;
+            height: 180px;
+            top: 35px;
+            left: 35px;
+            animation-duration: 5s;
+            animation-direction: reverse;
+        }
+
+        .orbital:nth-child(3) {
+            width: 120px;
+            height: 120px;
+            top: 65px;
+            left: 65px;
+            animation-duration: 4s;
+        }
+
+        .planet {
             position: absolute;
-            width: 60px;
-            height: 60px;
+            border-radius: 50%;
             background: linear-gradient(45deg, #90bafc, #4203a9);
-            opacity: 0.8;
-            border: 2px solid #ffffff;
+            box-shadow: 0 0 25px rgba(144, 186, 252, 0.9), inset 0 0 15px rgba(255, 255, 255, 0.5);
+            animation: pulse 2s infinite ease-in-out;
         }
 
-        .front  { transform: translateZ(30px); }
-        .back   { transform: translateZ(-30px); }
-        .right  { transform: rotateY(90deg) translateZ(30px); }
-        .left   { transform: rotateY(-90deg) translateZ(30px); }
-        .top    { transform: rotateX(90deg) translateZ(30px); }
-        .bottom { transform: rotateX(-90deg) translateZ(30px); }
+        .planet-1 { width: 50px; height: 50px; top: 10px; left: 100px; }
+        .planet-2 { width: 30px; height: 30px; top: 90px; left: 20px; animation-delay: 0.5s; }
+        .planet-3 { width: 40px; height: 40px; top: 160px; left: 150px; animation-delay: 0.3s; }
+        .planet-4 { width: 25px; height: 25px; top: 60px; left: 200px; animation-delay: 0.7s; }
 
-        @keyframes rotate {
+        .pulsar {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            top: 110px;
+            left: 110px;
+            background: radial-gradient(circle, white, #90bafc);
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+            animation: pulsar-beat 1.5s infinite ease-in-out;
+        }
+
+        .comet {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(144, 186, 252, 1);
+            animation: comet-streak 3s infinite linear;
+        }
+
+        .comet:nth-child(2) { animation-delay: 1s; animation-duration: 2.5s; }
+        .comet:nth-child(3) { animation-delay: 2s; animation-duration: 2s; }
+
+        .light-ring {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            top: 50px;
+            left: 50px;
+            border-radius: 50%;
+            border: 2px solid rgba(144, 186, 252, 0.5);
+            animation: ring-expand 4s infinite ease-in-out;
+        }
+
+        .stars {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+            animation: twinkle 1s infinite alternate;
+        }
+
+        .stars:nth-child(2) { top: 20px; left: 30px; animation-delay: 0.2s; }
+        .stars:nth-child(3) { top: 50px; left: 180px; animation-delay: 0.4s; }
+        .stars:nth-child(4) { top: 200px; left: 40px; animation-delay: 0.6s; }
+        .stars:nth-child(5) { top: 70px; left: 220px; animation-delay: 0.8s; }
+        .stars:nth-child(6) { top: 180px; left: 120px; animation-delay: 1s; }
+        .stars:nth-child(7) { top: 30px; left: 150px; animation-delay: 1.2s; }
+
+        .loader-text {
+            position: absolute;
+            bottom: 30px;
+            color: #90bafc;
+            font-size: 32px;
+            font-weight: bold;
+            text-shadow: 0 0 20px rgba(144, 186, 252, 1), 0 0 5px #4203a9;
+            transform-style: preserve-3d;
+            animation: text-rotate 5s infinite linear, glitch 2s infinite ease-in-out;
+        }
+
+        @keyframes galaxy-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes nebula-drift {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(20px, -20px) scale(1.1); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        @keyframes orbit {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.4); opacity: 1; }
+        }
+
+        @keyframes pulsar-beat {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(255, 255, 255, 0.8); }
+            50% { transform: scale(1.5); box-shadow: 0 0 50px rgba(255, 255, 255, 1); }
+        }
+
+        @keyframes comet-streak {
+            0% { transform: translate(0, 0); opacity: 1; }
+            100% { transform: translate(200px, -200px); opacity: 0; }
+        }
+
+        @keyframes ring-expand {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes text-rotate {
             0% { transform: rotateX(0deg) rotateY(0deg); }
             100% { transform: rotateX(360deg) rotateY(360deg); }
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); opacity: 1; }
+            20% { transform: translate(-3px, 3px); opacity: 0.8; }
+            40% { transform: translate(3px, -3px); opacity: 0.9; }
+            60% { transform: translate(-3px, -3px); }
+            80% { transform: translate(3px, 3px); }
         }
 
         .loader-hidden {
@@ -173,17 +317,32 @@
     </style>
 </head>
 <body>
+    <!-- Super Enhanced AstroBayt Loader -->
     <div class="loader-overlay" id="loader">
-        <div class="loader">
-            <div class="cube">
-                <div class="front"></div>
-                <div class="back"></div>
-                <div class="right"></div>
-                <div class="left"></div>
-                <div class="top"></div>
-                <div class="bottom"></div>
-            </div>
+        <div class="astro-loader">
+            <div class="nebula"></div>
+            <div class="nebula"></div>
+            <div class="orbital"></div>
+            <div class="orbital"></div>
+            <div class="orbital"></div>
+            <div class="planet planet-1"></div>
+            <div class="planet planet-2"></div>
+            <div class="planet planet-3"></div>
+            <div class="planet planet-4"></div>
+            <div class="pulsar"></div>
+            <div class="comet"></div>
+            <div class="comet"></div>
+            <div class="comet"></div>
+            <div class="light-ring"></div>
+            <div class="stars"></div>
+            <div class="stars"></div>
+            <div class="stars"></div>
+            <div class="stars"></div>
+            <div class="stars"></div>
+            <div class="stars"></div>
+            <div class="stars"></div>
         </div>
+        <div class="loader-text">AstroBayt</div>
     </div>
 
     <div class="container" id="container">
@@ -214,7 +373,7 @@
             setTimeout(() => {
                 loader.classList.add('loader-hidden');
                 container.classList.add('container-loaded');
-            }, 1500);
+            }, 3000); 
         });
 
         function generateQR() {
