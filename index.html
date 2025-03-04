@@ -21,7 +21,6 @@
             padding: 20px;
         }
 
-        /* Loader Styling */
         .loader-overlay {
             position: fixed;
             top: 0;
@@ -166,15 +165,14 @@
 
         #downloadBtn {
             margin-top: 15px;
-            background: linear-gradient(45deg, #90bafc, #4203a9);
             width: auto;
             padding: 10px 20px;
+            background: linear-gradient(45deg, #90bafc, #4203a9);
             display: inline-block;
         }
     </style>
 </head>
 <body>
-    <!-- Loader -->
     <div class="loader-overlay" id="loader">
         <div class="loader">
             <div class="cube">
@@ -209,7 +207,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
-        // Loader Logic
         window.addEventListener('load', function() {
             const loader = document.getElementById('loader');
             const container = document.getElementById('container');
@@ -240,22 +237,25 @@
                 correctLevel: QRCode.CorrectLevel.H
             });
 
-            // Download tugmasini qo'shish
             setTimeout(() => {
                 const qrImage = qrCodeDiv.querySelector('img');
                 if (qrImage) {
                     const downloadBtn = document.createElement('button');
                     downloadBtn.id = 'downloadBtn';
-                    downloadBtn.textContent = 'QR Kodni Yuklab Olish';
+                    downloadBtn.textContent = 'Yuklab Olish';
                     downloadBtn.onclick = function() {
+                        const canvas = qrCodeDiv.querySelector('canvas');
+                        const dataURL = canvas.toDataURL('image/png');
                         const link = document.createElement('a');
-                        link.href = qrImage.src;
+                        link.href = dataURL;
                         link.download = 'qr-code.png';
+                        document.body.appendChild(link);
                         link.click();
+                        document.body.removeChild(link);
                     };
                     qrCodeDiv.appendChild(downloadBtn);
                 }
-            }, 100); // QR kod generatsiya bo'lgandan keyin tugma qo'shiladi
+            }, 100);
         }
 
         document.getElementById('text').addEventListener('keypress', function(e) {
